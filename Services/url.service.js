@@ -8,7 +8,7 @@ const service = {
             let data = req.body;
             const insertData = await mongo.db.collection("urlDetails").insertOne(data);
             await mongo.db.collection("urlDetails").findOneAndUpdate({ _id: insertData.insertedId }, {
-                $set: { "shorturl": `http://localhost:3001/url/shorturl/${randomize('A0', 5)}`, "date": new Date().toISOString().slice(0, 10), "count": 0 }
+                $set: { "shorturl": `https://url-shortener-app-api.herokuapp.com/url/shorturl/${randomize('A0', 5)}`, "date": new Date().toISOString().slice(0, 10), "count": 0 }
             }, { upsert: true })
             const shortUrl = await mongo.db.collection("urlDetails").findOne({ _id: insertData.insertedId }, { projection: { _id: 0, shorturl: 1 } });
             res.send(shortUrl);
@@ -49,7 +49,7 @@ const service = {
     },
     async redirectUrl(req, res) {
         try {
-            const short = await mongo.db.collection("urlDetails").findOne({ shorturl: `http://localhost:3001/url/shorturl/${req.params.token}` });
+            const short = await mongo.db.collection("urlDetails").findOne({ shorturl: `https://url-shortener-app-api.herokuapp.com/url/shorturl/${req.params.token}` });
             if (short) {
                 const countval = await mongo.db.collection("urlDetails").
                     findOneAndUpdate({ shorturl: short.shorturl }, { $inc: { count: 1 } });

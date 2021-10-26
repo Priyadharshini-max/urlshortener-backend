@@ -19,7 +19,7 @@ const service = {
                     pass: process.env.PASSWORD,
                 }
             });
-
+            console.log("Register");
             // Input Validation
             const { error } = schema.register.validate(data);
             if (error) return res.status(400).send({ error: error.details[0].message })
@@ -48,7 +48,7 @@ const service = {
                 subject: "Verify Your Account ",
                 html: `
             <p>You requested for password reset </p>
-            <h3> Click  this <a href="https://url-shortener-app-api.herokuapp.com/verify/${token}" target="_blank">Link</a> to verify your account.</h3>
+            <h3> Click  this <a href="http://localhost:3000/verify/${token}" target="_blank">Link</a> to verify your account.</h3>
             `
             })
             res.send({ message: "Check Your Mail" });
